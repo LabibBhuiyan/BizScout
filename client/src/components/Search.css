@@ -1,0 +1,103 @@
+/* client/src/components/Search.css */
+.search-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.search-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-button:hover {
+  background-color: #555;
+}
+
+.results-list {
+  list-style: none;
+  padding: 0;
+}
+
+.place-item {
+  display: flex;
+  align-items: center;
+  background: white;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.place-icon {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 20px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.place-content {
+  flex: 1;
+}
+
+.place-name {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.place-address,
+.place-phone,
+.place-types {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.load-more-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.load-more-button:hover {
+  background-color: #555;
+}
