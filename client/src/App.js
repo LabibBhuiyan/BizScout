@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-ro
 import Search from './components/Search';
 import Login from './components/Login';
 import Bookmarks from './components/Bookmarks';
-import Info from './components/Info';
+import Home from './components/Home';
 import './App.css';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   const logout = () => {
     window.open("http://localhost:5001/auth/logout", "_self");
@@ -19,29 +20,59 @@ function App() {
   };
 
   useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:5001/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then((resObject) => {
-          setUser(resObject.user);
-        })
-        .catch((err) => {
-          console.log(err);
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/auth/status", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
         });
+
+        const data = await response.json();
+
+        if (data.isAuthenticated) {
+          fetchUser();
+        }
+
+        setAuthChecked(true); // Mark authentication check complete
+      } catch (err) {
+        console.log(err);
+      }
     };
-    getUser();
+
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/auth/login/success", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        });
+
+        if (response.status === 200) {
+          const resObject = await response.json();
+          setUser(resObject.user);
+        } else {
+          throw new Error("Authentication failed!");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    checkAuth();
   }, []);
+
+  if (!authChecked) {
+    return <div>Loading...</div>; // Render loading state while authentication check is in progress
+  }
 
   return (
     <Router>
@@ -55,9 +86,15 @@ function App() {
               <button className="menu-close" onClick={toggleMenu}>✖</button>
               <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/login">Login</Link></li>
+                <li><Link to="/search">Search</Link></li>
                 <li><Link to="/bookmarks">Bookmarks</Link></li>
-                <li><Link to="/info">Info</Link></li>
+                <li>
+                  {user ? (
+                    <Link onClick={logout}>Logout</Link>
+                  ) : (
+                    <Link to="/login">Login</Link>
+                  )}
+                </li>
               </ul>
             </nav>
             <span className="logo">
@@ -87,12 +124,18 @@ function App() {
           </header>
           <main className={`App-main ${isOpen ? 'open' : ''}`}>
             <Routes>
-              <Route path="/" element={<Search />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/bookmarks" element={<Bookmarks user={user} />} />
               <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-              <Route path="/bookmarks" element={<Bookmarks />} />
-              <Route path="/info" element={<Info />} />
             </Routes>
           </main>
+          <footer className="App-footer">
+            <div>
+              <p>&copy; 2024 BizScout. All rights reserved.</p>
+              <p className="trademark">® BizScout</p>
+            </div>
+          </footer>
         </div>
       </div>
     </Router>

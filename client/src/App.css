@@ -4,6 +4,18 @@
   z-index: 1; /* Ensure the container is above other elements */
 }
 
+/* App.css */
+
+/* Ensure the logo has initial position */
+.logo {
+  transition: transform 0.3s ease;
+}
+
+/* Adjust position when menu is open */
+.menu.open + .logo {
+  transform: translateX(200px); /* Adjust distance as needed */
+}
+
 .App {
   position: relative;
   display: flex;
@@ -18,6 +30,9 @@
   padding: 1rem;
   background-color: #333;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensures the header stays on top of other content */
 }
 
 a.link {
@@ -128,4 +143,27 @@ a.link {
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.App-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 2px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.App-footer p {
+  margin: 5px 0;
+}
+
+.App-footer .trademark {
+  text-align: center;
+}
+
+.App-footer .at-sign {
+  text-align: right;
 }

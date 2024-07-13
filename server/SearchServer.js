@@ -11,11 +11,15 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
+const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+const textSearchUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
+const autocompleteUrl = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+
 async function fetchPlaces(query, apiKey, pageToken = null) {
   const maxResultsPerPage = 5; // Number of results per page
 
   try {
-    const response = await axios.get('https://maps.googleapis.com/maps/api/place/textsearch/json', {
+    const response = await axios.get(textSearchUrl, {
       params: {
         query: query,
         key: apiKey,
@@ -28,7 +32,7 @@ async function fetchPlaces(query, apiKey, pageToken = null) {
         const placeDetailsResponse = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
           params: {
             place_id: place.place_id,
-            fields: 'name,types,formatted_address,formatted_phone_number,website,icon,icon_background_color',
+            fields: 'name,place_id,types,formatted_address,formatted_phone_number,website,icon,icon_background_color',
             key: apiKey,
           },
         });
@@ -37,11 +41,13 @@ async function fetchPlaces(query, apiKey, pageToken = null) {
 
         return {
           name: placeDetails.name,
+          place_id:placeDetails.place_id,
           types: placeDetails.types,
           formatted_address: placeDetails.formatted_address,
           formatted_phone_number: placeDetails.formatted_phone_number || 'N/A',
           icon: placeDetails.icon || null,
           icon_background_color: placeDetails.icon_background_color || null,
+          website: placeDetails.website || null,
         };
       })
     );
@@ -58,17 +64,45 @@ async function fetchPlaces(query, apiKey, pageToken = null) {
   }
 }
 
+async function fetchAutocomplete(input, apiKey) {
+  try {
+    const response = await axios.get(autocompleteUrl, {
+      params: {
+        input,
+        key: apiKey,
+      },
+    });
+
+    return response.data.predictions.map(prediction => ({
+      description: prediction.description,
+    }));
+  } catch (error) {
+    console.error('Error fetching autocomplete predictions:', error);
+    throw error;
+  }
+}
+
 app.get('/api/places', async (req, res) => {
   const { query, pageToken } = req.query;
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
 
   try {
     const { places, nextPageToken } = await fetchPlaces(query, apiKey, pageToken);
-
     res.json({ places, nextPageToken });
   } catch (error) {
     console.error('Error fetching places:', error);
     res.status(500).send('Error fetching places');
+  }
+});
+
+app.get('/api/autocomplete', async (req, res) => {
+  const { input } = req.query;
+
+  try {
+    const predictions = await fetchAutocomplete(input, apiKey);
+    res.json(predictions);
+  } catch (error) {
+    console.error('Error fetching autocomplete predictions:', error);
+    res.status(500).send('Error fetching autocomplete predictions');
   }
 });
 

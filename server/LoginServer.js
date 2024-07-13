@@ -1,12 +1,15 @@
+// LoginServer.js
 const express = require('express');
 const cookieSession = require('cookie-session');
 const cors = require('cors');
 const passportSetup = require('./passport');
 const passport = require('passport');
 const authRoute = require('./auth');
-require('dotenv').config(); 
+require('dotenv').config();
 
 const app = express();
+
+app.use(express.json());
 
 // Session middleware setup
 app.use(cookieSession({
@@ -40,7 +43,48 @@ app.get('/auth/status', (req, res) => {
   res.json({ isAuthenticated: req.isAuthenticated() });
 });
 
-// Other routes or middleware definitions
+// Bookmark routes
+const bookmarks = []; // In-memory storage for bookmarks
+
+app.post('/bookmarks', (req, res) => {
+  if (req.isAuthenticated()) {
+    bookmarks.push({ userId: req.user.id, place: req.body.place });
+    res.status(200).send('Bookmark saved');
+  } else {
+    console.error('Unauthorized access attempt');
+    res.status(401).send('Unauthorized');
+  }
+});
+
+app.get('/bookmarks', (req, res) => {
+  if (req.isAuthenticated()) {
+    const userBookmarks = bookmarks.filter(bookmark => bookmark.userId === req.user.id);
+    res.status(200).json(userBookmarks);
+  } else {
+    console.error('Unauthorized access attempt');
+    res.status(401).send('Unauthorized');
+  }
+});
+
+app.delete('/bookmarks', (req, res) => {
+  if (req.isAuthenticated()) {
+    const { name, address } = req.body;
+    const index = bookmarks.findIndex(bookmark => 
+      bookmark.userId === req.user.id && 
+      bookmark.place.name === name && 
+      bookmark.place.formatted_address === address
+    );
+    if (index > -1) {
+      bookmarks.splice(index, 1);
+      res.status(200).send('Bookmark deleted');
+    } else {
+      res.status(404).send('Bookmark not found');
+    }
+  } else {
+    console.error('Unauthorized access attempt');
+    res.status(401).send('Unauthorized');
+  }
+});
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {

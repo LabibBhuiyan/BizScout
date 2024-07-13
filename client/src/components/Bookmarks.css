@@ -1,26 +1,46 @@
-/* client/src/components/Login.css */
-.login-container {
+/* client/src/components/Bookmarks.css */
+.bookmarks-container {
   padding: 20px;
-  text-align: center;
 }
 
-.login-form {
-  display: inline-block;
-  text-align: left;
+.bookmarks-title {
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.bookmarks-list {
+  list-style-type: none;
+  padding: 0;
 }
 
-.login-button {
-  padding: 10px 20px;
-  background-color: #007BFF;
+.bookmark-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.bookmark-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookmark-name {
+  font-size: 1.5em;
+}
+
+.bookmark-address,
+.bookmark-phone {
+  font-size: 1em;
+}
+
+.delete-button {
+  background-color: red;
   color: white;
   border: none;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
-.login-button:hover {
-  background-color: #0056b3;
+.delete-button:hover {
+  background-color: darkred;
 }
