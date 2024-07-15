@@ -1,3 +1,4 @@
+// client/src/components/Bookmarks.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -83,6 +84,7 @@ const Bookmarks = ({ user }) => {
       setBookmarks(response.data);
     } catch (error) {
       console.error('Error fetching bookmarks:', error);
+      alert('Failed to fetch bookmarks.');
     }
   };
 

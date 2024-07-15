@@ -1,7 +1,8 @@
+//auth.js
 const router = require('express').Router();
 const passport = require('passport');
 
-const CLIENT_URL = 'http://localhost:3000'; // Adjust as needed
+const CLIENT_URL = 'http://localhost:3000'; 
 
 // Route for successful login
 router.get('/login/success', (req, res) => {
@@ -9,7 +10,10 @@ router.get('/login/success', (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Successfully authenticated',
-      user: req.user,
+      user: {
+        displayName: req.user.username, // Assuming username is the display name
+        photo: req.user.thumbnail, // Assuming thumbnail is the URL for the user's photo
+      },
     });
   } else {
     res.status(401).json({
@@ -26,7 +30,7 @@ router.get('/logout', (req, res) => {
 });
 
 // Google OAuth route
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Google OAuth callback route
 router.get(

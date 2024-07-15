@@ -41,6 +41,7 @@ function App() {
         setAuthChecked(true); // Mark authentication check complete
       } catch (err) {
         console.log(err);
+        setAuthChecked(true); // Mark authentication check complete even if there's an error
       }
     };
 
@@ -104,20 +105,22 @@ function App() {
             </span>
             {user ? (
               <ul className="list">
-                <li className="listItem">
-                  <img
-                    src={user.photos[0].value}
-                    alt=""
-                    className="avatar"
-                  />
-                </li>
+                {user.photos && user.photos.length > 0 && (
+                  <li className="listItem">
+                    <img
+                      src={user.photos[0].value}
+                      alt=""
+                      className="avatar"
+                    />
+                  </li>
+                )}
                 <li className="listItem">{user.displayName}</li>
                 <li className="listItem" onClick={logout}>
                   Logout
                 </li>
               </ul>
             ) : (
-              <Link className="link" to="login">
+              <Link className="link" to="/login">
                 Login
               </Link>
             )}

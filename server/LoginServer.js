@@ -5,6 +5,7 @@ const cors = require('cors');
 const passportSetup = require('./passport');
 const passport = require('passport');
 const authRoute = require('./auth');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
@@ -85,6 +86,23 @@ app.delete('/bookmarks', (req, res) => {
     res.status(401).send('Unauthorized');
   }
 });
+
+
+// connect to mongodb
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    process.exit(1);
+  }
+};
+
+connectDB();
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
