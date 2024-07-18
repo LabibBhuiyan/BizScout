@@ -1,0 +1,46 @@
+/* client/src/components/Bookmarks.css */
+.bookmarks-container {
+  padding: 20px;
+}
+
+.bookmarks-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.bookmarks-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.bookmark-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.bookmark-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookmark-name {
+  font-size: 1.5em;
+}
+
+.bookmark-address,
+.bookmark-phone {
+  font-size: 1em;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}

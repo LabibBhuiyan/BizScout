@@ -1,0 +1,169 @@
+/* client/src/App.css */
+.AppContainer {
+  position: relative;
+  z-index: 1; /* Ensure the container is above other elements */
+}
+
+/* App.css */
+
+/* Ensure the logo has initial position */
+.logo {
+  transition: transform 0.3s ease;
+}
+
+/* Adjust position when menu is open */
+.menu.open + .logo {
+  transform: translateX(200px); /* Adjust distance as needed */
+}
+
+.App {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure app takes full viewport height */
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensures the header stays on top of other content */
+}
+
+a.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Start off-screen */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  overflow-y: auto; /* Enable vertical scrolling */
+  transition: left 0.3s;
+  z-index: 2; /* Ensure menu is above other content */
+}
+
+.menu.open {
+  left: 0; /* Slide in from the left */
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu ul li {
+  padding: 1rem;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.menu ul li a:hover {
+  background-color: #555;
+}
+
+.menu-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.App-main {
+  flex: 1;
+  padding: 1rem;
+  transition: margin-left 0.3s; /* Smooth transition when menu opens */
+}
+
+.App-main.open {
+  margin-left: 250px; /* Shift main content to the right when menu is open */
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
+
+.link:hover {
+  color: #61dafb;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.App-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 2px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.App-footer p {
+  margin: 5px 0;
+}
+
+.App-footer .trademark {
+  text-align: center;
+}
+
+.App-footer .at-sign {
+  text-align: right;
+}
