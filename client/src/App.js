@@ -136,7 +136,6 @@ function App() {
           <footer className="App-footer">
             <div>
               <p>&copy; 2024 BizScout. All rights reserved.</p>
-              <p className="trademark">® BizScout</p>
             </div>
           </footer>
         </div>

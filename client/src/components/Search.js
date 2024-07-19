@@ -1,4 +1,4 @@
-//client/src/components/Search.js
+// client/src/components/Search.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Search.css';
@@ -8,10 +8,12 @@ const Search = () => {
   const [results, setResults] = useState([]);
   const [nextPageToken, setNextPageToken] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false); // Initially false
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [noResultsMessage, setNoResultsMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bookmarks, setBookmarks] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pages, setPages] = useState([]);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -35,6 +37,8 @@ const Search = () => {
       const response = await axios.get(apiUrl, { params: { query } });
       setResults(response.data.places);
       setNextPageToken(response.data.nextPageToken);
+      setCurrentPage(0);
+      setPages([{ places: response.data.places, token: response.data.nextPageToken }]);
 
       if (response.data.places.length === 0) {
         setNoResultsMessage('The place you searched for might not exist or already has a website.');
@@ -46,7 +50,14 @@ const Search = () => {
     }
   };
 
-  const fetchMorePlaces = async () => {
+  const fetchMorePlaces = async (page) => {
+    if (pages[page]) {
+      setResults(pages[page].places);
+      setNextPageToken(pages[page].token);
+      setCurrentPage(page);
+      return;
+    }
+
     try {
       const response = await axios.get(apiUrl, {
         params: {
@@ -54,8 +65,11 @@ const Search = () => {
           pageToken: nextPageToken,
         },
       });
-      setResults((prevResults) => [...prevResults, ...response.data.places]);
+      const newPages = [...pages, { places: response.data.places, token: response.data.nextPageToken }];
+      setPages(newPages);
+      setResults(response.data.places);
       setNextPageToken(response.data.nextPageToken);
+      setCurrentPage(page);
     } catch (error) {
       console.error('Error fetching more places:', error);
     }
@@ -188,11 +202,14 @@ const Search = () => {
           </li>
         ))}
       </ul>
-      {nextPageToken && (
-        <div className="pagination">
-          <button className="load-more-button" onClick={fetchMorePlaces}>Load More</button>
-        </div>
-      )}
+      <div className="pagination">
+        {currentPage > 0 && (
+          <button className="pagination-button" onClick={() => fetchMorePlaces(currentPage - 1)}>Previous</button>
+        )}
+        {nextPageToken && (
+          <button className="pagination-button" onClick={() => fetchMorePlaces(currentPage + 1)}>Next</button>
+        )}
+      </div>
     </div>
   );
 };

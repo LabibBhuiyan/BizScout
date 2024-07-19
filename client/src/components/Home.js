@@ -94,7 +94,7 @@ const Home = () => {
     <InfoContainer>
       <IntroSection>
         <Title>Welcome to BizScout</Title>
-        <Paragraph>Discover and explore businesses near you with BizScout. Click on the icons to get started!</Paragraph>
+        <Paragraph>Discover and explore businesses near you with BizScout. Click on the icons below in the features section to get started!</Paragraph>
       </IntroSection>
 
       <FeaturesSection>
