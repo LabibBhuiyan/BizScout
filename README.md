@@ -56,7 +56,11 @@ Ensure you have the necessary environment variables set up. You may need to conf
 - **Google Places API Key**
 - **MongoDB URI**
 
+## Demo
 
+Watch the video below to see a demonstration of the BizScout application in action:
+
+[![BizScout Demo](https://img.youtube.com/vi/KB7oE8q5B4U/maxresdefault.jpg)](https://www.youtube.com/watch?v=KB7oE8q5B4U)`
 
     
    
