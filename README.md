@@ -2,6 +2,12 @@
 
 BizScout is a full-stack application designed to help freelance web developers find clients efficiently. Identifying a gap in the market where many small businesses needed web development services but lacked online visibility, I developed this application. It uses the Google Places API to locate businesses without websites, allowing freelancers to reach out to potential clients. The application features user authentication, bookmarking, and search functionalities, with both frontend and backend development handled.
 
+## Demo
+
+Watch the video below to see a demonstration of the BizScout application in action:
+
+[![BizScout Demo](https://img.youtube.com/vi/KB7oE8q5B4U/maxresdefault.jpg)](https://www.youtube.com/watch?v=KB7oE8q5B4U)`
+
 ## Features
 
 - **Search Functionality**: Search for businesses using the Google Places API, with results displayed in a user-friendly format.
@@ -55,12 +61,5 @@ Ensure you have the necessary environment variables set up. You may need to conf
 - **Google Client Secret**
 - **Google Places API Key**
 - **MongoDB URI**
-
-## Demo
-
-Watch the video below to see a demonstration of the BizScout application in action:
-
-[![BizScout Demo](https://img.youtube.com/vi/KB7oE8q5B4U/maxresdefault.jpg)](https://www.youtube.com/watch?v=KB7oE8q5B4U)`
-
     
    
