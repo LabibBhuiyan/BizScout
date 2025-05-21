@@ -11,8 +11,8 @@ router.get('/login/success', (req, res) => {
       success: true,
       message: 'Successfully authenticated',
       user: {
-        displayName: req.user.username, // Assuming username is the display name
-        photo: req.user.thumbnail, // Assuming thumbnail is the URL for the user's photo
+        displayName: req.user.username, 
+        photo: req.user.thumbnail,
       },
     });
   } else {
