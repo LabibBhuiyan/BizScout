@@ -5,7 +5,7 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative; /* Ensure relative positioning for absolute children */
+  position: relative;
 }
 
 .search-title {
@@ -16,16 +16,16 @@
 .search-form {
   display: flex;
   margin-bottom: 0px;
-  position: relative; /* Ensure relative positioning for absolute children */
+  position: relative; 
 }
 
 .search-input-container {
-  position: relative; /* Ensure relative positioning for absolute children */
+  position: relative; 
   flex: 1;
 }
 
 .search-input {
-  width: 95%; /* Ensure input takes full width of container */
+  width: 95%;
   padding: 10px;
   margin-right: 10px;
   margin-bottom: 0;
@@ -44,15 +44,15 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   position: relative;
-  width: 97%; /* Adjust width to match search input (subtract border) */
-  max-height: 10em; /* Example max height */
+  width: 97%;
+  max-height: 10em; 
   overflow-y: auto;
-  z-index: 1; /* Ensure suggestions overlay other content */
-  display: none; /* Initially hide suggestions */
+  z-index: 1; 
+  display: none; 
 }
 
 .search-input-container:hover .suggestions-list {
-  display: block; /* Display suggestions on hover */
+  display: block;
 }
 
 .suggestion-item {
